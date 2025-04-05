@@ -36,7 +36,7 @@ export default function RootLayout() {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rowContainer}>
-        <Image style={styles.image} source={logo}/>
+        <Image style={styles.image} source={logo} resizeMode="contain"/>
         <Text style={styles.title}>Minhas Tarefas</Text>
       </View>
 
