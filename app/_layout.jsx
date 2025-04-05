@@ -2,7 +2,6 @@ import {
   FlatList,
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -12,14 +11,28 @@ import logo from "../assets/images/logo.png"
 import { Alert } from "react-native";
 import { colors } from "../constants/colors";
 import Task from "../components/Task";
+import { useState } from "react";
 
+const initialTasks = [
+  { id: 1, completed: true, text: "Fazer café" },
+  { id: 2, completed: false, text: "Estudar React Native" },
+  { id: 3, completed: false, text: "Acadademia" },
+]
 export default function RootLayout() {
 
-  const tastks = [
-    { id: 1, completed: true, text: "Fazer café" },
-    { id: 2, completed: false, text: "Estudar React Native" },
-    { id: 3, completed: false, text: "Acadademia" },
-  ]
+  const [tasks, setTasks] = useState(initialTasks)
+  const [text, setText] = useState("")
+
+  const addTask = () => {
+    if (text === "") {
+      Alert.alert('Preencha o Campo, Corretamente!!!!')
+    } else {
+      const newTask = { id: tasks.length + 1, completed: false, text: text }
+      setTasks([...tasks, newTask])
+      setText("")
+    }
+  }
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rowContainer}>
@@ -28,17 +41,20 @@ export default function RootLayout() {
       </View>
 
       <View style={styles.rowContainer}>
-        <TextInput style={styles.input} />
+        <TextInput style={styles.input}
+          value={text}
+          onChangeText={setText}
+        />
         <Pressable
-          onPress={() => Alert.alert("Olá Mundo!!")}
+          onPress={addTask}
           style={({ pressed }) => [styles.button, { backgroundColor: pressed ? "blue" : colors.primary }]}>
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
       </View>
-      <FlatList 
-        data={tastks}
+      <FlatList
+        data={tasks}
         keyExtractor={(item) => item.id}
-        renderItem={({item}) => <Task text={item.text}/>}
+        renderItem={({ item }) => <Task text={item.text} />}
       />
     </View>
   )
