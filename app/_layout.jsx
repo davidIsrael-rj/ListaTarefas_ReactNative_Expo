@@ -4,6 +4,12 @@ import { Alert } from "react-native";
 import { colors } from "../constants/colors";
 
 export default function RootLayout() {
+
+  const tastks =[
+    {id: 1, completed: true, text: "Fazer café"},
+    {id: 2, completed: false, text: "Estudar React Native"},
+    {id: 3, completed: false, text: "Acadademia"},
+  ]
   return (
     <ScrollView style={styles.mainContainer}>
       <View style={styles.rowContainer}>
@@ -18,6 +24,9 @@ export default function RootLayout() {
           style={({pressed}) =>[styles.button, {backgroundColor: pressed ? "blue" :  colors.primary}]}>
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
+      </View>
+      <View>
+        {tastks.map(item => <Text key={item.id}>{item.text}</Text>)}
       </View>
     </ScrollView>
   )
