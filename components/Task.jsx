@@ -1,19 +1,24 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../constants/colors";
+import { useState } from "react";
 
-export default function Task({text}){
-    return <View style={styles.rowContainer}>
-        <Pressable>
+export default function Task({ text, initialCompleted }) {
+
+    const [completed, setCompleted] = useState(initialCompleted)
+
+    return (
+    <View style={styles.rowContainer}>
+        <Pressable onPress={() => setCompleted(!completed)}>
             <Ionicons
                 name="checkmark-circle"
                 size={32}
-                color={colors.primary}
+                color={completed ? colors.primary : "gray"}
             />
         </Pressable>
         <Text>{text}</Text>
     </View>
-}
+)}
 
 const styles = StyleSheet.create({
     rowContainer: {

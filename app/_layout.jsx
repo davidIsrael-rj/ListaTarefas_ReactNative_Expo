@@ -36,7 +36,7 @@ export default function RootLayout() {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.rowContainer}>
-        <Image style={styles.image} source={logo} />
+        <Image style={styles.image} source={logo}/>
         <Text style={styles.title}>Minhas Tarefas</Text>
       </View>
 
@@ -54,7 +54,7 @@ export default function RootLayout() {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Task text={item.text} />}
+        renderItem={({ item }) => <Task text={item.text} initialCompleted={item.completed}/>}
       />
     </View>
   )
