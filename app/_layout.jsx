@@ -11,6 +11,7 @@ import {
 import logo from "../assets/images/logo.png"
 import { Alert } from "react-native";
 import { colors } from "../constants/colors";
+import Task from "../components/Task";
 
 export default function RootLayout() {
 
@@ -20,7 +21,7 @@ export default function RootLayout() {
     { id: 3, completed: false, text: "Acadademia" },
   ]
   return (
-    <ScrollView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       <View style={styles.rowContainer}>
         <Image style={styles.image} source={logo} />
         <Text style={styles.title}>Minhas Tarefas</Text>
@@ -37,9 +38,9 @@ export default function RootLayout() {
       <FlatList 
         data={tastks}
         keyExtractor={(item) => item.id}
-        renderItem={({item}) => <Text>{item.text}</Text>}
+        renderItem={({item}) => <Task text={item.text}/>}
       />
-    </ScrollView>
+    </View>
   )
 }
 
