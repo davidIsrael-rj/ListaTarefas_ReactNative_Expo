@@ -47,6 +47,7 @@ export default function RootLayout() {
           <TextInput style={styles.input}
             value={text}
             onChangeText={setText}
+            keyboardType="email-address"
           />
           <Pressable
             onPress={addTask}
