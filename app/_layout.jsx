@@ -12,6 +12,7 @@ import { Alert } from "react-native";
 import { colors } from "../constants/colors";
 import Task from "../components/Task";
 import { useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const initialTasks = [
   { id: 1, completed: true, text: "Fazer café" },
@@ -34,29 +35,37 @@ export default function RootLayout() {
   }
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.rowContainer}>
-        <Image style={styles.image} source={logo} resizeMode="contain"/>
-        <Text style={styles.title}>Minhas Tarefas</Text>
-      </View>
+    <GestureHandlerRootView>
 
-      <View style={styles.rowContainer}>
-        <TextInput style={styles.input}
-          value={text}
-          onChangeText={setText}
+      <View style={styles.mainContainer}>
+        <View style={styles.rowContainer}>
+          <Image style={styles.image} source={logo} resizeMode="contain" />
+          <Text style={styles.title}>Minhas Tarefas</Text>
+        </View>
+
+        <View style={styles.rowContainer}>
+          <TextInput style={styles.input}
+            value={text}
+            onChangeText={setText}
+          />
+          <Pressable
+            onPress={addTask}
+            style={({ pressed }) => [styles.button, { backgroundColor: pressed ? "blue" : colors.primary }]}>
+            <Text style={styles.buttonText}>+</Text>
+          </Pressable>
+        </View>
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Task
+              text={item.text}
+              initialCompleted={item.completed}
+              deleteTask={() => setTasks(tasks.filter(t => t.id !== item.id))}
+            />)}
         />
-        <Pressable
-          onPress={addTask}
-          style={({ pressed }) => [styles.button, { backgroundColor: pressed ? "blue" : colors.primary }]}>
-          <Text style={styles.buttonText}>+</Text>
-        </Pressable>
       </View>
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Task text={item.text} initialCompleted={item.completed}/>}
-      />
-    </View>
+    </GestureHandlerRootView>
   )
 }
 
