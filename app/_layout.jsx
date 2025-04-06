@@ -13,6 +13,7 @@ import { colors } from "../constants/colors";
 import Task from "../components/Task";
 import { useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const initialTasks = [
   { id: 1, completed: true, text: "Fazer café" },
@@ -36,8 +37,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView>
-
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
         <View style={styles.rowContainer}>
           <Image style={styles.image} source={logo} resizeMode="contain" />
           <Text style={styles.title}>Minhas Tarefas</Text>
@@ -65,7 +65,7 @@ export default function RootLayout() {
               deleteTask={() => setTasks(tasks.filter(t => t.id !== item.id))}
             />)}
         />
-      </View>
+      </SafeAreaView>
     </GestureHandlerRootView>
   )
 }
