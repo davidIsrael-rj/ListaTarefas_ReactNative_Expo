@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -94,6 +95,9 @@ export default function RootLayout() {
               deleteTask={() => setTasks(tasks.filter(t => t.id !== item.id))}
             />)}
         />
+        {Platform.OS === 'ios' && <Text>Executando no IOS</Text>}
+        {Platform.OS === 'android' && <Text>Executando no Android</Text>}
+        {Platform.OS === 'web' && <Text>Executando no WEB</Text>}
       </SafeAreaView>
     </GestureHandlerRootView>
   )
