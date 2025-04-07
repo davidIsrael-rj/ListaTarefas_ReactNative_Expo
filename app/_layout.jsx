@@ -8,6 +8,7 @@ import {
   View
 } from "react-native";
 import logo from "../assets/images/logo.png"
+import logo2 from "../assets/images/check.png"
 import { Alert } from "react-native";
 import { colors } from "../constants/colors";
 import Task from "../components/Task";
