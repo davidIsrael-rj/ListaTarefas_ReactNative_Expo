@@ -12,19 +12,47 @@ import logo2 from "../assets/images/check.png"
 import { Alert } from "react-native";
 import { colors } from "../constants/colors";
 import Task from "../components/Task";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const initialTasks = [
-  { id: 1, completed: true, text: "Fazer café" },
-  { id: 2, completed: false, text: "Estudar React Native" },
-  { id: 3, completed: false, text: "Acadademia" },
-]
+// const initialTasks = [
+//   { id: 1, completed: true, text: "Fazer café" },
+//   { id: 2, completed: false, text: "Estudar React Native" },
+//   { id: 3, completed: false, text: "Acadademia" },
+// ]
 export default function RootLayout() {
 
-  const [tasks, setTasks] = useState(initialTasks)
+  const [tasks, setTasks] = useState([])
   const [text, setText] = useState("")
+
+  useEffect(()=>{
+    getTasksAsyncStorage = async () =>{
+      try {
+        const jsonValue = await AsyncStorage.getItem("tasks")
+        if(jsonValue !== null){
+          setTasks(JSON.parse(jsonValue))
+        }
+      }catch(e){
+        console.log(e)
+      }
+    }
+    getTasksAsyncStorage()
+  }, [])
+
+
+  useEffect(() => {
+      setTasksAsStorage = async () => {
+        try {
+          const jsonValue = JSON.stringify(tasks)
+          await AsyncStorage.setItem('tasks', jsonValue)
+        } catch(e) {
+          console.log(e)
+        }
+      }
+      setTasksAsStorage()
+  }, [tasks])
 
   const addTask = () => {
     if (text === "") {
