@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Button from "../components/Button";
 
 // const initialTasks = [
 //   { id: 1, completed: true, text: "Fazer café" },
@@ -28,14 +29,14 @@ export default function RootLayout() {
   const [tasks, setTasks] = useState([])
   const [text, setText] = useState("")
 
-  useEffect(()=>{
-    getTasksAsyncStorage = async () =>{
+  useEffect(() => {
+    getTasksAsyncStorage = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem("tasks")
-        if(jsonValue !== null){
+        if (jsonValue !== null) {
           setTasks(JSON.parse(jsonValue))
         }
-      }catch(e){
+      } catch (e) {
         console.log(e)
       }
     }
@@ -44,15 +45,15 @@ export default function RootLayout() {
 
 
   useEffect(() => {
-      setTasksAsStorage = async () => {
-        try {
-          const jsonValue = JSON.stringify(tasks)
-          await AsyncStorage.setItem('tasks', jsonValue)
-        } catch(e) {
-          console.log(e)
-        }
+    setTasksAsStorage = async () => {
+      try {
+        const jsonValue = JSON.stringify(tasks)
+        await AsyncStorage.setItem('tasks', jsonValue)
+      } catch (e) {
+        console.log(e)
       }
-      setTasksAsStorage()
+    }
+    setTasksAsStorage()
   }, [tasks])
 
   const addTask = () => {
@@ -79,11 +80,7 @@ export default function RootLayout() {
             onChangeText={setText}
             keyboardType="email-address"
           />
-          <Pressable
-            onPress={addTask}
-            style={({ pressed }) => [styles.button, { backgroundColor: pressed ? "blue" : colors.primary }]}>
-            <Text style={styles.buttonText}>+</Text>
-          </Pressable>
+         <Button funcao={addTask}/>
         </View>
         <FlatList
           data={tasks}
@@ -122,19 +119,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     flexGrow: 1,
-  },
-  button: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20
   },
   textContainer: {
     display: "flex",
